@@ -18,9 +18,14 @@ pipeline {
           junit 'test-reports/*.xml'
         }
         failure{
-          error('Build is aborted due to failure of build stage')
+          error('Build is aborted. The testing stage fails')
         }
       }       
+    }
+    stage('deploy') {
+       steps {
+        echo "BUILD IS STARTING TO BE DEPLOYED..."      
+      }
     }
   }
 post {
