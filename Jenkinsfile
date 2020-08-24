@@ -11,16 +11,14 @@ pipeline {
     }
     stage('test') {
       steps {
-        try{
           sh 'python test.py'
-        }catch(err){
-          junit 'test-reports/*.xml'
-          throw err
-        }
       }
       post {
         always {
           junit 'test-reports/*.xml'
+        }
+        failure{
+          error('Build is aborted due to failure of build stage')
         }
       }       
     }
