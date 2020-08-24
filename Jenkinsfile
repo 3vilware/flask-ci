@@ -5,20 +5,20 @@ pipeline {
     dockerImage = ''
 
   }
-  agent { 
-      docker { 
-        image 'python:3.7.2' 
-        args '--user 0:0'	
-      } 
-    }  
+  agent none
   stages {
     stage('build') {
       steps {
-        sh 'pip install -r requirements.txt'
+       echo "COMPILING...."
       }
     }
     stage('test') {
+      agent { docker { 
+        image 'python:3.7.2' 
+        args '--user 0:0'	
+      } }
       steps {
+          sh 'pip install -r requirements.txt'
           sh 'python test.py'
       }
       post {
@@ -30,17 +30,7 @@ pipeline {
         }
       }       
     }
-    stage('deploy') {
-       steps {
-        echo "BUILD IS STARTING TO BE DEPLOYED..."      
-      }
-    }
     stage('Building image') {
-      agent { 
-        docker { 
-          image 'docker' 
-        } 
-      }  
       steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -54,19 +44,19 @@ pipeline {
       steps {
           sh 'python --version'
       }
-    }
-    stage('Deploy Image') {
-      agent { 
-        docker { 
-          image 'docker' 
-        } 
-      }  
+    } 
+    stage('Pushing Image') { 
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
+      }
+    }
+    stage('deploy') {
+       steps {
+        echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
     }
   }
