@@ -54,7 +54,12 @@ pipeline {
           docker { image '3vilware/flask-app:$BUILD_NUMBER' }
       }
       steps {
-          sh 'python --version'
+          sh 'node --version'
+      }
+      post{
+        failure{
+          error('Build is aborted: Testing image fails')
+        }
       }
     }
 
