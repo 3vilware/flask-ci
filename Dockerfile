@@ -4,6 +4,5 @@ COPY requirements.txt /
 RUN pip install -r requirements.txt
 
 COPY app.py /
-RUN python app.py
 
 EXPOSE 5000
