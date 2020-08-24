@@ -75,7 +75,7 @@ pipeline {
 
     stage('Deploy Stg') {
        steps {
-        echo332 "BUILD IS STARTING TO BE DEPLOYED..."      
+        echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
       post{
         failure{
