@@ -11,14 +11,16 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'python test.py'
+        try{
+          sh 'python test.py'
+        }catch(err){
+          junit 'test-reports/*.xml'
+          throw err
+        }
       }
       post {
         always {
           junit 'test-reports/*.xml'
-	  if(currentBuild.result == 'FAILURE'){
-	  	return
-	  }
         }
       }       
     }
