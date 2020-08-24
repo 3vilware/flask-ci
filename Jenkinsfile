@@ -54,7 +54,7 @@ pipeline {
           docker { image '3vilware/flask-app:$BUILD_NUMBER' }
       }
       steps {
-          sh 'node --version'
+          sh 'python --version'
       }
       post{
         failure{
@@ -73,7 +73,7 @@ pipeline {
       }
     }
 
-    stage('Deploy STG') {
+    stage('Deploy Stg') {
        steps {
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
