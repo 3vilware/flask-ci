@@ -8,10 +8,22 @@ pipeline {
   agent none
   stages {
     stage('Build') {
+      agent { docker { 
+        image 'python:3.7.2' 
+        args '--user 0:0'	
+      } }
       steps {
-       echo "COMPILING...."
+          echo "COMPILING...."
+          sh 'pip install -r requirements.txt'
+          sh 'python --version'
+      }
+      post{
+         failure{
+          error('Build is aborted. The first running attempt fails')
+        }
       }
     }
+
     stage('Test') {
       agent { docker { 
         image 'python:3.7.2' 
@@ -26,10 +38,11 @@ pipeline {
           junit 'test-reports/*.xml'
         }
         failure{
-          error('Build is aborted. The testing stage fails')
+          error('Pipeline is aborted. The testing stage fails')
         }
       }       
     }
+
     stage('Building image') {
       steps{
         script {
@@ -37,6 +50,7 @@ pipeline {
         }
       }
     }
+
     stage('Testing Image' ) {
       agent {
           docker { image '3vilware/flask-app:$BUILD_NUMBER' }
@@ -44,7 +58,8 @@ pipeline {
       steps {
           sh 'python --version'
       }
-    } 
+    }
+
     stage('Pushing Image') { 
       steps{
         script {
@@ -54,11 +69,13 @@ pipeline {
         }
       }
     }
+
     stage('Deploy STG') {
        steps {
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
     }
+
     stage('Deploy Prod') {
        steps {
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
