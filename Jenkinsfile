@@ -39,7 +39,6 @@ pipeline {
       agent { 
         docker { 
           image 'docker' 
-          args '--user 0:0'	
         } 
       }  
       steps{
@@ -60,7 +59,6 @@ pipeline {
       agent { 
         docker { 
           image 'docker' 
-          args '--user 0:0'	
         } 
       }  
       steps{
