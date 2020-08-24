@@ -16,6 +16,9 @@ pipeline {
       post {
         always {
           junit 'test-reports/*.xml'
+	  if(currentBuild.result == 'FAILURE'){
+	  	return
+	  }
         }
       }       
     }
