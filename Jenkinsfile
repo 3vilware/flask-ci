@@ -6,43 +6,41 @@ pipeline {
 
   }
   agent none
+  
   stages {
-    stage('Build') {
+    stage('Build and Test') {
       agent { docker { 
         image 'python:3.7.2' 
         args '--user 0:0'	
       } }
-      steps {
-          echo "COMPILING...."
-          sh 'pip install -r requirements.txt'
-          sh 'python --version'
-      }
-      post{
-         failure{
-          error('Build is aborted. The first running attempt fails')
+      stages{
+        stage('Build') {
+          steps {
+              echo "COMPILING...."
+              sh 'pip install -r requirements.txt'
+              sh 'python --version'
+          }
+          post{
+            failure{
+              error('Build is aborted.')
+            }
+          }
+        }
+        stage('Test') {
+          steps {
+              sh 'python test.py'
+          }
+          post {
+            always {
+              junit 'test-reports/*.xml'
+            }
+            failure{
+              error('Pipeline is aborted. The testing stage fails')
+            }
+          }       
         }
       }
     }
-
-    stage('Test') {
-      agent { docker { 
-        image 'python:3.7.2' 
-        args '--user 0:0'	
-      } }
-      steps {
-          sh 'pip install -r requirements.txt'
-          sh 'python test.py'
-      }
-      post {
-        always {
-          junit 'test-reports/*.xml'
-        }
-        failure{
-          error('Pipeline is aborted. The testing stage fails')
-        }
-      }       
-    }
-
     stage('Building image') {
       steps{
         script {
