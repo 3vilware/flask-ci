@@ -7,12 +7,12 @@ pipeline {
   }
   agent none
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
        echo "COMPILING...."
       }
     }
-    stage('test') {
+    stage('Test') {
       agent { docker { 
         image 'python:3.7.2' 
         args '--user 0:0'	
@@ -54,7 +54,12 @@ pipeline {
         }
       }
     }
-    stage('deploy') {
+    stage('Deploy STG') {
+       steps {
+        echo "BUILD IS STARTING TO BE DEPLOYED..."      
+      }
+    }
+    stage('Deploy Prod') {
        steps {
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
