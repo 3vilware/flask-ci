@@ -75,7 +75,12 @@ pipeline {
 
     stage('Deploy Stg') {
        steps {
-        echo "BUILD IS STARTING TO BE DEPLOYED..."      
+        echo332 "BUILD IS STARTING TO BE DEPLOYED..."      
+      }
+      post{
+        failure{
+          error('Deploy is aborted: Build to stg is crashed')
+        }
       }
     }
 
