@@ -6,9 +6,9 @@ pipeline {
 
   }
   agent none
-  
+
   stages {
-    stage('Build and Test') {
+    stage('Starting build and test') {
       agent { docker { 
         image 'python:3.7.2' 
         args '--user 0:0'	
