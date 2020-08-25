@@ -3,6 +3,7 @@ pipeline {
     registry = "3vilware/flask-app"
     registryCredential = 'docker-hub-access'
     dockerImage = ''
+    KUBECONFIG = credentials('KUBECONFIG')
   }
   agent none
 
@@ -86,6 +87,7 @@ pipeline {
 
     stage('Deploy Prod') {
        steps {
+        echo  ${KUBECONFIG}
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
     }
