@@ -3,7 +3,6 @@ pipeline {
     registry = "3vilware/flask-app"
     registryCredential = 'docker-hub-access'
     dockerImage = ''
-
   }
   agent none
 
