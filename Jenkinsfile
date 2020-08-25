@@ -74,6 +74,7 @@ pipeline {
 
     stage('Deploy Stg') {
        steps {
+        build job: 'pack-build', parameters[]
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
       post{
