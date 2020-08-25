@@ -3,7 +3,7 @@ pipeline {
     registry = "3vilware/flask-app"
     registryCredential = 'docker-hub-access'
     dockerImage = ''
-    KUBECONFIG = credentials('KUBECONFIG')
+    KUBECONFIG = 'KUBECONFIG'
   }
   agent none
 
