@@ -74,7 +74,7 @@ pipeline {
 
     stage('Deploy Stg') {
        steps {
-        build job: 'pack-build', parameters:[]
+        build job: 'pack-build', parameters:[string(param_custom: 'IT WOORKS', value:'val1')]
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
       post{
