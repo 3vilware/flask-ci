@@ -87,7 +87,7 @@ pipeline {
 
     stage('Deploy Prod') {
        steps {
-        echo  ${KUBECONFIG}
+        echo  "${KUBECONFIG}"
         echo "BUILD IS STARTING TO BE DEPLOYED..."      
       }
     }
