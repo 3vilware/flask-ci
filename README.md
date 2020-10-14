@@ -1,13 +1,3 @@
 # flask-ci
-   update for hook final
-s
-+
-+
-+
-+
-+
-+
-+
-+
-+
-+
+   update for hook final <br/>
+`testing automated codepipelines`
